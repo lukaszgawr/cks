@@ -24,7 +24,7 @@ Disabling mkdir:
 
 ## Allow all syscalls
 ![](../images/15_seccomp_8.png)
-Unconfined allows all, but setting date still doesn't work because of other security mechanisms.
+Unconfined allows all, but setting date still doesn't work because of other security mechanisms ([Capabilities](17_linux_capabilities.md)).
 
 ## Seccomp in kubernetes
 Kubernetes unlike docker does not implement seccomp by default (it's set to unconfined):
