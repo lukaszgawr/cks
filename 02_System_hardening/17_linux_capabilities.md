@@ -12,6 +12,8 @@ By default date cannot be changed because this capability is not enabled in kern
 ![](../images/17_capabilities_3.png)
 
 ## Adding capabilities to pods
+> **NOTE:** Capabilities are only supported at the container level and not at the POD level
+
 ![](../images/17_capabilities_4.png)
 
 ## Dropping capabilities
