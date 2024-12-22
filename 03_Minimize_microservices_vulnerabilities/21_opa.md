@@ -10,7 +10,16 @@ and apps can now use it:
 ## Policy testing
 ![](../images/21_opa_4.png)
 
-## OPA in Kubernetes - OPA Gatekeeper
+## OPA in Kubernetes
+###Kube-mgmt
+kube-mgmt manages policies / data of Open Policy Agent instances in Kubernetes.
+  
+kube-mgmt is uded to:  
+* Load policies and/or static data into OPA instance from ConfigMap.
+* Replicate Kubernetes resources including CustomResourceDefinitions (CRDs) into OPA instance.
+
+
+## OPA Gatekeeper
 ![](../images/21_opa_5.png)
 Installation - install according to instruction: https://open-policy-agent.github.io/gatekeeper/website/docs/install/
 
