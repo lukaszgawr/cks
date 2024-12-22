@@ -11,7 +11,7 @@ and apps can now use it:
 ![](../images/21_opa_4.png)
 
 ## OPA in Kubernetes
-###Kube-mgmt
+### kube-mgmt
 kube-mgmt manages policies / data of Open Policy Agent instances in Kubernetes.
   
 kube-mgmt is uded to:  
