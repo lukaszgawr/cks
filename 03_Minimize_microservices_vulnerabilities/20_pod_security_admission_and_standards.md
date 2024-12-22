@@ -19,6 +19,28 @@ There are some predefined profiles (PSS) that let you choose security standard (
 ![](../images/20_psa_pss_6.png)
 ![](../images/20_psa_pss_7.png)
 
+## Admission configuration manifest
+```yaml
+apiVersion: admissionregistration.k8s.io/v1
+kind: AdmissionConfiguration
+plugins:
+  - name: PodSecurity
+    configuration:
+      apiVersion: pod-security.admission.config.k8s.io/v1
+      kind: PodSecurityConfiguration
+      defaults:
+        enforce: baseline
+        enforce-version: latest
+        audit: restricted
+        audit-version: latest
+        warn: restricted
+        warn-version: latest
+      exemptions:
+        usernames: [] 
+        runtimeClassNames: [] 
+        namespaces: [my-namespace]  
+```
+
 ## Understanding Pod Security Policy
 
 Understanding Pod Security Policy
