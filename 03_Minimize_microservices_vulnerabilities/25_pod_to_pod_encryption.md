@@ -35,3 +35,32 @@ Check the encryption status of the Cilium installation
 ![](../images/25_pod2pod_enc_7.png)
 ![](../images/25_pod2pod_enc_8.png)
 ![](../images/25_pod2pod_enc_9.png)
+
+### Other way to verify encryption
+Check connectivity between the pods, in a new terminal window run the following command:
+
+```watch kubectl exec -it curlpod -- curl -s http://nginx```
+
+The watch curl command should return the HTML content of the NGINX welcome page, indicating that the client pod can access the NGINX pod.
+
+Run a bash shell in one of the Cilium pods with ```kubectl -n kube-system exec -ti ds/cilium -- bash``` and execute the following commands:
+
+Check that WireGuard has been enabled (number of peers should correspond to a number of nodes subtracted by one): ```cilium-dbg status | grep Encryption```
+
+Install tcpdump:  
+```
+apt-get update
+apt-get -y install tcpdump
+```
+Check that traffic is sent via the cilium_wg0 tunnel device is encrypted:  
+
+```tcpdump -n -i cilium_wg0 -X```
+
+Here we are using `tcpdump`` to capture and display detailed network packets on the cilium_wg0 interface.
+
+The -n option avoids DNS lookups, and the -X option shows packet content in both hexadecimal and ASCII format.
+
+Via tcpdump, you should see the traffic between the pods.
+
+We see requests from curlpod to nginx and responses from nginx to curlpod in tcpdump output.
+
