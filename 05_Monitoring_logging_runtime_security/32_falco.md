@@ -16,3 +16,14 @@ This falco_rules.yaml will be overwritten when updating falco. So custom rules n
 ![](../images/32_falco_10.png)
 After adding issue hot reload:
 ![](../images/32_falco_11.png)
+
+## References
+https://falco.org/docs/getting-started/installation/
+
+https://github.com/falcosecurity/charts/tree/master/falco
+
+https://falco.org/docs/rules/supported-fields/
+
+https://falco.org/docs/rules/default-macros/
+
+https://falco.org/docs/configuration/
