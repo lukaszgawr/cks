@@ -60,6 +60,61 @@ Here we are using `tcpdump`` to capture and display detailed network packets on 
 
 The -n option avoids DNS lookups, and the -X option shows packet content in both hexadecimal and ASCII format.
 
+### Cilium Network Policies
+#### Deny policies
+There is an existing CiliumNetworkPolicy
+default-allow in namespace team-azure which allows all traffic.
+  
+Create a CiliumNetworkPolicy in Namespace team-azure as follows:
+  
+Create a Layer 3 policy named p1 that denies outgoing traffic from Pods with the label role=messenger to Pods with the label role=database.
+```
+root@controlplane ~ ➜  k get cnp -n team-azure -o yaml
+apiVersion: v1
+items:
+- apiVersion: cilium.io/v2
+  kind: CiliumNetworkPolicy
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"cilium.io/v2","kind":"CiliumNetworkPolicy","metadata":{"annotations":{},"name":"default-allow","namespace":"team-azure"},"spec":{"egress":[{"toEndpoints":[{"matchLabels":{}}]}],"endpointSelector":{},"ingress":[{"fromEndpoints":[{"matchLabels":{}}]}]}}
+    creationTimestamp: "2025-01-07T12:53:35Z"
+    generation: 1
+    name: default-allow
+    namespace: team-azure
+    resourceVersion: "2855"
+    uid: 9aaf99b8-2525-4303-b1a1-ac7100bed3b3
+  spec:
+    egress:
+    - toEndpoints:
+      - matchLabels: {}
+    endpointSelector: {}
+    ingress:
+    - fromEndpoints:
+      - matchLabels: {}
+kind: List
+metadata:
+  resourceVersion: ""
+
+root@controlplane ~ ➜  
+```
+Deny policy:  
+```yaml
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: p1
+  namespace: team-azure
+spec:
+  endpointSelector:
+    matchLabels:
+      role: messenger
+  egressDeny:
+  - toEndpoints:
+    - matchLabels:
+        role: database
+```
+
 Via tcpdump, you should see the traffic between the pods.
 
 We see requests from curlpod to nginx and responses from nginx to curlpod in tcpdump output.
